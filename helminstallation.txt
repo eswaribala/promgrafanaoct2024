@@ -22,3 +22,32 @@ helm repo list
 #Add repository
 helm repo add bitnami https://charts.bitnami.com/bitnami
 
+#prometheus installation
+
+Step 1: Add the Prometheus Helm Chart Repository
+
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+Update your Helm repository:
+helm repo update
+Step 2:
+kubectl create namespace prometheus
+
+Step3:
+
+helm install prometheus prometheus-community/prometheus -n prometheus
+
+Step 4:
+
+helm list -n prometheus
+Step5:
+
+kubectl get pods -n prometheus
+Step6:
+
+Access Prometheus dashboard
+kubectl port-forward -n prometheus svc/prometheus-server 9090:80
+
+
+
+
