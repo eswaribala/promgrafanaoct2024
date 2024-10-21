@@ -52,6 +52,9 @@ kubectl port-forward -n prometheus svc/prometheus-server 9090:80
 #go to browser
 http://localhost:9090
 
+#if node exporter fails run the patch
+kubectl patch -n prometheus ds prometheus-prometheus-node-exporter --type "json" -p "[{"op": "remove", "path" : "/spec/template/spec/containers/0/volumeMounts/2/mountPropagation"}]"
+
 
 #download prometheus configuration file from current instance
 
