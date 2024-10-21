@@ -11,7 +11,14 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 choco install kubernetes-helm
 
 
-Check helm version
+#Check helm version
 
 helm version
+
+#check helm repository list
+
+helm repo list
+
+#Add repository
+helm repo add bitnami https://charts.bitnami.com/bitnami
 
