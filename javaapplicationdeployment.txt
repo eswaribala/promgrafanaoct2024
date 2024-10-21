@@ -13,3 +13,5 @@ will see hash prompt
 #quit
 
   
+kubectl apply -f deployment-v17.yaml
+
