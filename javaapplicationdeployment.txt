@@ -12,6 +12,14 @@ will see hash prompt
 #create database customerdb;
 #quit
 
-  
+#deploy the application  
 kubectl apply -f deployment-v17.yaml
 
+#check service
+kubectl get svc
+
+#do port forward
+kubectl port-forward svc/customerservice 7074:7074
+
+#go to browser
+http://localhost:7074/swagger-ui.html
