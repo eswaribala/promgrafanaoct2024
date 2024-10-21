@@ -1,0 +1,8 @@
+Download all the yaml files(deployment-v17.yaml,postgres-deployment.yaml,postgres-pv.yaml) and store in prometehus training folder
+
+open cmd with admin privileges
+
+kubectl apply -f postgres-pv.yaml
+  
+kubectl apply -f postgres-deployment.yaml
+  
