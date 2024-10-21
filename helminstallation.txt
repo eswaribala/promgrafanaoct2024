@@ -53,3 +53,8 @@ kubectl port-forward -n prometheus svc/prometheus-server 9090:80
 http://localhost:9090
 
 
+#download prometheus configuration file from current instance
+download values.yaml for modification
+helm show values prometheus-community/prometheus > values.yaml
+
+
