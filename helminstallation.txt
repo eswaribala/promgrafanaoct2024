@@ -48,6 +48,8 @@ Step6:
 Access Prometheus dashboard
 kubectl port-forward -n prometheus svc/prometheus-server 9090:80
 
-
+#test the prometheus
+#go to browser
+http://localhost:9090
 
 
