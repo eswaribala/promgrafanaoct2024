@@ -76,6 +76,12 @@ kubectl get secret --namespace default my-grafana -o jsonpath="{.data.admin-pass
 # URL will be
 http://host.docker.internal:9090
 
+#integrate java api metrics to prometheus for pull metrics
+ - job_name: 'customer-app'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['host.docker.internal:7074']
+
 
 
 
