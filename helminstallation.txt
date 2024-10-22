@@ -92,6 +92,9 @@ kubectl get svc -n prometheus
 #port forward prometheus gateway
 kubectl port-forward -n prometheus svc/<name push gateway service> 9091:9091
 
+#send temporary job metric to push gateway
+# open bash script
+echo "example_metric 42.42" | curl --data-binary @- http://localhost:9091/metrics/job/my_job
 
 
 
