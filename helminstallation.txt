@@ -86,6 +86,21 @@ http://host.docker.internal:9090
 
 helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n prometheus
 
+#configure push gateway 
+# go to cmd line
+kubectl get svc -n prometheus
+#port forward prometheus gateway
+kubectl port-forward -n prometheus svc/<name push gateway service> 9091:9091
+
+
+
+
+
+
+
+
+
+
 
 
 
