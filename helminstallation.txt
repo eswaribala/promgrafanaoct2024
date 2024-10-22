@@ -96,9 +96,16 @@ kubectl port-forward -n prometheus svc/<name push gateway service> 9091:9091
 # open bash script
 echo "example_metric 42.42" | curl --data-binary @- http://localhost:9091/metrics/job/my_job
 
+#modify values.yaml to pull metrics from push gateway
+
+- job_name: 'pushgateway'
+        static_configs:
+          - targets: ['prometheus-prometheus-pushgateway.prometheus.svc:9091']
+
+#after save changes, run the following 
 
 
-
+helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n prometheus
 
 
 
