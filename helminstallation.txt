@@ -108,6 +108,11 @@ echo "example_metric 42.42" | curl --data-binary @- http://localhost:9091/metric
 helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n prometheus
 
 
+#run node exporter
+kubectl get svc -n prometheus
+#select node exporter service name
+
+kubectl port-forward -n prometheus svc/<node exporter service name> 9100:9100
 
 
 
