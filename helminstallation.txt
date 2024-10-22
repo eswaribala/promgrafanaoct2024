@@ -82,6 +82,9 @@ http://host.docker.internal:9090
         static_configs:
           - targets: ['host.docker.internal:7074']
 
+#after updating values.yaml file , send the updates to prometheus server
+
+helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n prometheus
 
 
 
