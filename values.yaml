@@ -347,7 +347,7 @@ server:
   ## Defining configMapOverrideName will cause templates/server-configmap.yaml
   ## to NOT generate a ConfigMap resource
   ##
-  configMapOverrideName: ""
+  #configMapOverrideName: ""
 
   ## Extra labels for Prometheus server ConfigMap (ConfigMap that holds serverFiles)
   extraConfigmapLabels: {}
@@ -556,7 +556,6 @@ server:
   ## Prometheus AlertManager configuration
   ##
   alertmanagers: []
-
   ## Specify if a Pod Security Policy for node-exporter must be created
   ## Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/
   ##
@@ -1320,6 +1319,28 @@ alertmanager:
   ## If false, alertmanager will not be installed
   ##
   enabled: true
+  config:
+   global:
+     resolve_timeout: 5m
+   route:
+      group_by: ['alertname']
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 1h
+      receiver: 'web-hook'   # default receiver
+   receivers:
+      - name: 'email-alerts'
+        email_configs:
+          - to: 'alerts@example.com'
+            from: 'alertmanager@example.com'
+            smarthost: 'smtp.example.com:587'
+            auth_username: 'smtp-user'
+            auth_password: 'smtp-password'
+      - name: 'web-hook'
+        webhook_configs:
+            - url: 'http://host.docker.internal:4000/webhook'
+            
+
   alertmanagerSpec:
     replicas: 1  # Number of Alertmanager replicas
     externalUrl: ""
@@ -1334,35 +1355,29 @@ alertmanager:
     fsGroup: 65534
 alertmanagerFiles:
   alertmanager.yml: |
+    alertmanager:
+  config:
     global:
       resolve_timeout: 5m
-      smtp_smarthost: 'smtp.example.com:587'   # Replace with your SMTP server
-      smtp_from: 'alertmanager@example.com'    # From email address
-      smtp_auth_username: 'user@example.com'   # SMTP username
-      smtp_auth_password: 'your_password_here' # SMTP password (use Kubernetes secrets in production)
-
     route:
       group_by: ['alertname']
       group_wait: 30s
       group_interval: 5m
-      repeat_interval: 3h
-      receiver: 'default'
-
+      repeat_interval: 1h
+      receiver: 'web-hook'   # default receiver
     receivers:
-      - name: 'default'
+      - name: 'email-alerts'
         email_configs:
-          - to: 'team@example.com'
+          - to: 'alerts@example.com'
             from: 'alertmanager@example.com'
             smarthost: 'smtp.example.com:587'
-            auth_username: 'user@example.com'
-            auth_password: 'your_password'
+            auth_username: 'smtp-user'
+            auth_password: 'smtp-password'
+      - name: 'web-hook'
+        webhook_configs:
+            - url: 'http://host.docker.internal:4000/webhook'
+            
 
-    inhibit_rules:
-      - source_match:
-          severity: 'critical'
-        target_match:
-          severity: 'warning'
-        equal: ['alertname', 'cluster', 'service']
 ## kube-state-metrics sub-chart configurable values
 ## Please see https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-state-metrics
 ##
