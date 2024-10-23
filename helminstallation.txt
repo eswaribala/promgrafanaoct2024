@@ -116,7 +116,7 @@ kubectl port-forward -n prometheus svc/<node exporter service name> 9100:9100
 
 #alert manager to run
 kubectl get svc -n prometheus
-kubectl port-forward -n prometheus svc/<atertmanagerservicename> 9093:9093
+kubectl port-forward -n prometheus svc/<alertmanagerservicename> 9093:9093
 
 
 
