@@ -134,4 +134,6 @@ kubectl get configmap -n prometheus
 #to see specific configuration file
 kubectl describe configmap prometheus-alertmanager -n prometheus
 
+#download alert manager configuration file local folder for further modification
+kubectl get configmap prometheus-alertmanager -n prometheus -o yaml > alertmanager-config.yaml
 
