@@ -118,6 +118,15 @@ kubectl port-forward -n prometheus svc/<node exporter service name> 9100:9100
 kubectl get svc -n prometheus
 kubectl port-forward -n prometheus svc/<alertmanagerservicename> 9093:9093
 
+#modify values.yml with alert rules
 
+helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n prometheus
+#add alert manager as target for scrape_configs
+- job_name: 'alertmanagers'
+        static_configs:
+          - targets: ['prometheus-alertmanager:9093']
+
+
+helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n prometheus
 
 
