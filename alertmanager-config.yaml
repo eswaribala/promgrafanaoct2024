@@ -1,0 +1,64 @@
+apiVersion: v1
+data:
+  alertmanager.yml: |
+    global:
+      resolve_timeout: 5m
+    route:
+      # Define the top-level route, which receives all alerts
+      receiver: 'webhook-critical-receiver'   # Default receiver
+      group_by: ['alertname']
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 4h
+      routes:
+        # Custom route for alerts with severity = critical
+        - match:
+            severity: critical
+          receiver: 'webhook-critical-receiver'
+          group_wait: 10s
+          group_interval: 1m
+          repeat_interval: 30m
+        
+        # Custom route for alerts from specific namespaces
+        - match_re:
+            namespace: 'prod-.*'
+          receiver: 'production-receiver'
+          group_wait: 1m
+          group_interval: 10m
+          repeat_interval: 1h
+    receivers:
+      # Default receiver
+      - name: 'default-receiver'
+        email_configs:
+          - to: 'ops@example.com'
+            from: 'alertmanager@example.com'
+            smarthost: 'smtp.example.com:587'
+            auth_username: 'alertmanager'
+            auth_password: 'yourpassword'
+
+      # Receiver for critical alerts
+      - name: 'critical-receiver'
+        pagerduty_configs:
+          - routing_key: 'your-pagerduty-integration-key'
+
+      # Receiver for production alerts
+      - name: 'webhook-critical-receiver'
+        webhook_configs:
+          - url: 'http://localhost:4000/webhook'
+
+kind: ConfigMap
+metadata:
+  annotations:
+    meta.helm.sh/release-name: prometheus
+    meta.helm.sh/release-namespace: prometheus
+  creationTimestamp: "2024-10-20T14:23:35Z"
+  labels:
+    app.kubernetes.io/instance: prometheus
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: alertmanager
+    app.kubernetes.io/version: v0.27.0
+    helm.sh/chart: alertmanager-1.12.0
+  name: prometheus-alertmanager
+  namespace: prometheus
+  resourceVersion: "79516"
+  uid: 98819038-f3d1-4148-be45-f98b9881bc72
