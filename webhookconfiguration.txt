@@ -1,0 +1,11 @@
+#step 1
+create folder webhookdemo
+#step 2
+create server.js and package.json
+#step 3
+go to webhook demo folder in nodejs command prompt
+#step 4
+npm install
+#step 5
+#run server.js
+node server.js
