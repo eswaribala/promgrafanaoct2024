@@ -129,4 +129,9 @@ helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n promet
 
 helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n prometheus
 
+#alert manager configurations
+kubectl get configmap -n prometheus
+#to see specific configuration file
+kubectl describe configmap prometheus-alertmanager -n prometheus
+
 
