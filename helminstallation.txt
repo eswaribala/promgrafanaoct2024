@@ -162,3 +162,18 @@ helm install london-prometheus prometheus-community/prometheus --namespace londo
            annotations:
              summary: "Job Request {{ $labels.instance }} is not running"
              description: "Job Request {{ $labels.instance }} has been down for the last 2 minutes."
+
+#creating nginx exporter
+helm install nginx-exporter prometheus-community/prometheus-nginx-exporter -n prometheus
+#updated metrics in values.yml
+nginx:
+ status: 
+  enabled: true
+  port: 9113
+metrics:
+ enabled: true
+ path: /metrics
+ port: 9113
+ 
+#helm upgrade
+helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n prometheus
