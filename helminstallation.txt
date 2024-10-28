@@ -177,3 +177,5 @@ metrics:
  
 #helm upgrade
 helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n prometheus
+#statsd exporter
+helm install statsd-exporter prometheus-community/prometheus-statsd-exporter -n prometheus
