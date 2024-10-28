@@ -143,7 +143,7 @@ kubectl get configmap prometheus-alertmanager -n prometheus -o yaml > alertmanag
 helm install newyork-prometheus prometheus-community/prometheus --namespace newyork --create-namespace
 helm install london-prometheus prometheus-community/prometheus --namespace london --create-namespace
 #aggregation
-- job_name: 'federate'
+- job_name: 'global-view'
         scrape_interval: 15s
         honor_labels: true
         metrics_path: '/federate'
