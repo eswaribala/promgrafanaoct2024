@@ -179,3 +179,14 @@ metrics:
 helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n prometheus
 #statsd exporter
 helm install statsd-exporter prometheus-community/prometheus-statsd-exporter -n prometheus
+#expose exporter
+kubectl port-forward -n prometheus svc/statsd-exporter-prometheus-statsd-exporter -n prometheus  9102:9102
+# integrate statsd to prometheus
+- job_name: 'statsdexporter'
+        metrics_path: '/metrics'
+        static_configs:
+          - targets: ['host.docker.internal:9102']
+#update helm
+helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n prometheus
+
+
