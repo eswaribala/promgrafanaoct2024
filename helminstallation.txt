@@ -153,3 +153,12 @@ helm install london-prometheus prometheus-community/prometheus --namespace londo
         static_configs:
           - targets: ['host.docker.internal:9080','host.docker.internal:9070']
 
+#aggregated alerting rules
+- alert: JobRequestRateSum
+           expr: sum(rate(http_server_requests_seconds_sum[24h])) by (outcome)
+           for: 2m
+           labels:
+             severity: critical
+           annotations:
+             summary: "Job Request {{ $labels.instance }} is not running"
+             description: "Job Request {{ $labels.instance }} has been down for the last 2 minutes."
