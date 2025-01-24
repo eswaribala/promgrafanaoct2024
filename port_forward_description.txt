@@ -1,0 +1,27 @@
+1. Prometheus server 9090 
+   #kubectl port-forward svc/prometheus-server -n prometheus 9090:80
+2. Alert Manager 9093 
+   #kubectl port-forward svc/prometheus-alertmanager -n prometheus 9093:9093
+
+3. Push Gateway 9091
+    #kubectl port-forward svc/prometheus-prometheus-pushgateway -n prometheus 9091:9091
+
+4. Node Exporter 9100
+  #kubectl port-forward svc/prometheus-prometheus-node-exporter -n prometheus 9100:9100
+
+5. Java Microservice 7074
+
+#kubectl port-forward svc/customerservice  7074:7074
+
+
+6. Web hook 4000
+#kubectl port-forward svc/nodejs-service  4000:80
+
+
+7. Grafana 3000
+#kubectl port-forward svc/mygrafana  3000:80
+
+8. Windows Exporter 9182
+
+9. Python Exporter 9877
+#kubectl port-forward svc/metric-service  9877:80
